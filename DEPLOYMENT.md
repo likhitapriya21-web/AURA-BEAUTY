@@ -25,9 +25,9 @@ The application includes real-time Firebase Firestore synchronization with offli
 ```javascript
 const firebaseConfig = {
     apiKey: "AIzaSy...",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project.appspot.com",
+    authDomain: "aura-cosmetics-boutique.firebaseapp.com",
+    projectId: "aura-cosmetics-boutique",
+    storageBucket: "aura-cosmetics-boutique.appspot.com",
     messagingSenderId: "123456789012",
     appId: "1:123456789012:web:abcdef"
 };
@@ -69,14 +69,15 @@ npx vercel --prod
 
 ---
 
-## 3. Alternative: Hosting on Firebase
+## 3. Hosting on Firebase (Target: https://aura-cosmetics-boutique.web.app)
 
-If you want to host the frontend on Firebase Hosting alongside the Firebase Backend:
+To deploy the frontend directly to Firebase Hosting:
 ```powershell
 cd "c:\Users\LENOVO\OneDrive\Desktop\cosmetic_recommendation_system (2)\cosmetic_recommendation_system"
 firebase deploy --only hosting
 ```
-Your app will be live at `https://<YOUR_FIREBASE_PROJECT_ID>.web.app`.
+Your boutique will immediately go live at:
+**`https://aura-cosmetics-boutique.web.app`** (and `https://aura-cosmetics-boutique.firebaseapp.com`)
 
 ---
 

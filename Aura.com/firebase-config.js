@@ -5,9 +5,9 @@
 // Project Settings -> General -> Your apps -> Web app -> SDK setup and configuration
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
-    authDomain: "aura-cosmetics.firebaseapp.com",
-    projectId: "aura-cosmetics",
-    storageBucket: "aura-cosmetics.appspot.com",
+    authDomain: "aura-cosmetics-boutique.firebaseapp.com",
+    projectId: "aura-cosmetics-boutique",
+    storageBucket: "aura-cosmetics-boutique.appspot.com",
     messagingSenderId: "123456789012",
     appId: "1:123456789012:web:abcdef1234567890"
 };
