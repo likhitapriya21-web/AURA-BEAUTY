@@ -705,6 +705,15 @@ checkoutForm.addEventListener('submit', (e) => {
     // Save to LocalStorage
     orders.unshift(newOrder);
     localStorage.setItem('aura_orders', JSON.stringify(orders));
+
+    // Sync to Firebase Cloud Firestore Backend
+    if (window.FirebaseBackend && window.FirebaseBackend.isConnected()) {
+        window.FirebaseBackend.saveOrder(newOrder);
+        cart.forEach(cartItem => {
+            const invItem = inventory.find(p => p.id === cartItem.product.id);
+            if (invItem) window.FirebaseBackend.syncProduct(invItem);
+        });
+    }
     
     checkoutModal.classList.remove('active');
     successModal.classList.add('active');
@@ -779,6 +788,12 @@ restockForm.addEventListener('submit', (e) => {
         inventoryLogs.unshift(receiptLog);
         localStorage.setItem('aura_inventory_logs', JSON.stringify(inventoryLogs));
         
+        // Sync restock to Firebase Cloud Firestore
+        if (window.FirebaseBackend && window.FirebaseBackend.isConnected()) {
+            window.FirebaseBackend.syncProduct(inventory[prodIndex]);
+            window.FirebaseBackend.logInventoryReceipt(receiptLog);
+        }
+        
         const activeBtn = document.querySelector('.filter-btn.active');
         const activeCat = activeBtn ? activeBtn.dataset.filter : 'All';
         renderProducts(activeCat);
@@ -811,6 +826,11 @@ addProductForm.addEventListener('submit', (e) => {
     
     inventory.unshift(newProduct);
     localStorage.setItem('aura_inventory', JSON.stringify(inventory));
+
+    // Sync new product to Firebase Cloud Firestore
+    if (window.FirebaseBackend && window.FirebaseBackend.isConnected()) {
+        window.FirebaseBackend.syncProduct(newProduct);
+    }
     
     const activeBtn = document.querySelector('.filter-btn.active');
     const activeCat = activeBtn ? activeBtn.dataset.filter : 'All';
@@ -861,3 +881,42 @@ function renderOrders() {
 // Initial Render
 renderProducts('All');
 updateCart();
+
+// Initialize Backend Status Pill & Cloud Sync
+function setupBackendIntegration() {
+    const statusDot = document.querySelector('.status-dot');
+    const statusText = document.getElementById('backend-status-text');
+    const statusBadge = document.getElementById('backend-status');
+    
+    if (window.FirebaseBackend && window.FirebaseBackend.isConnected()) {
+        if (statusDot) statusDot.classList.remove('local');
+        if (statusText) statusText.innerText = 'Firebase Live';
+        if (statusBadge) statusBadge.title = 'Connected to Firebase Cloud Firestore';
+        
+        // Hydrate live products from Firebase Firestore
+        window.FirebaseBackend.getProducts().then(cloudProducts => {
+            if (cloudProducts && cloudProducts.length > 0) {
+                inventory = cloudProducts;
+                localStorage.setItem('aura_inventory', JSON.stringify(inventory));
+                const activeBtn = document.querySelector('.filter-btn.active');
+                const activeCat = activeBtn ? activeBtn.dataset.filter : 'All';
+                renderProducts(activeCat);
+            }
+        });
+        
+        // Hydrate live orders from Firebase Firestore
+        window.FirebaseBackend.getOrders().then(cloudOrders => {
+            if (cloudOrders && cloudOrders.length > 0) {
+                orders = cloudOrders;
+                localStorage.setItem('aura_orders', JSON.stringify(orders));
+            }
+        });
+    } else {
+        if (statusDot) statusDot.classList.add('local');
+        if (statusText) statusText.innerText = 'Local DB Sync';
+        if (statusBadge) statusBadge.title = 'Local DB Active (Enter Firebase keys in firebase-config.js for live cloud sync)';
+    }
+}
+
+// Check backend status after DOM is ready
+setTimeout(setupBackendIntegration, 500);

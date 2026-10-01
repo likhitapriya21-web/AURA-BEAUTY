@@ -29,6 +29,10 @@
                 <a href="http://localhost:8501" target="_blank" style="color: #FF4F5A; font-weight: 600;">✨ AI Diagnostic Curator</a>
             </div>
             <div class="nav-icons">
+                <div id="backend-status" class="backend-badge" title="Firebase Cloud Backend Status">
+                    <span class="status-dot"></span>
+                    <span id="backend-status-text">Cloud Sync</span>
+                </div>
                 <button id="cart-btn">
                     <span>Cart</span>
                     <span id="cart-count">0</span>
@@ -272,6 +276,13 @@
         </div>
     </div>
 
+    <!-- Firebase SDK (v10 compat CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <!-- Firebase Backend Configuration -->
+    <script src="firebase-config.js"></script>
+    <!-- Main Boutique Logic -->
     <script src="script.js"></script>
 </body>
 
