@@ -1,101 +1,86 @@
 # Aura Beauty Boutique - Hosting & Deployment Architecture
 
 This project is configured with a modern, decoupled production architecture:
-- **Frontend Hosting**: **Vercel** (Global Edge CDN with sub-second asset delivery) or **Firebase Hosting**
-- **Cloud Backend**: **Firebase Cloud Firestore & Authentication** (Real-time orders, dynamic inventory sync, product catalog, and supply logs)
+- **Frontend Hosting**: **Firebase Hosting** (`https://aura-beauty-82fd4.web.app`) or **Vercel** (`https://aura-beauty.vercel.app`)
+- **Cloud Backend**: **Firebase Cloud Firestore & Authentication** on project **`aura-beauty-82fd4`** (Real-time orders, dynamic inventory sync, product catalog, and supply logs)
 - **AI Diagnostic Engine**: **Streamlit Cloud** (Python ML recommender system)
 
 ---
 
-## 1. Firebase Backend Setup (Cloud Firestore & Auth)
+## 1. Firebase Backend & Project Setup (`aura-beauty-82fd4`)
 
-The application includes real-time Firebase Firestore synchronization with offline local fallback.
+- **Firebase Console:** [https://console.firebase.google.com/u/0/project/aura-beauty-82fd4/overview](https://console.firebase.google.com/u/0/project/aura-beauty-82fd4/overview)
 
-### Step 1: Create a Firebase Project
-1. Go to the [Firebase Console](https://console.firebase.google.com/).
-2. Click **Create a project** and name it (e.g. `aura-cosmetics-boutique`).
-3. Under **Build**:
+### Step 1: In Your Firebase Console
+1. Under **Build**:
    - **Firestore Database**: Click *Create Database* in **Production mode** (or test mode).
    - **Authentication**: Enable *Anonymous* and/or *Email/Password* provider.
-
-### Step 2: Configure Your Credentials
-1. In Firebase Console, go to **Project Settings** (gear icon) -> **General**.
-2. Scroll to **Your apps**, click the **Web** (`</>`) icon, and register the app.
-3. Copy the `firebaseConfig` object and paste it into [`Aura.com/firebase-config.js`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20(2)/cosmetic_recommendation_system/Aura.com/firebase-config.js):
+2. In **Project Settings** (gear icon) -> **General**:
+   - Under **Your apps**, if not already registered, click the **Web** (`</>`) icon.
+   - Register your app as `Aura Boutique`.
+   - Copy your `firebaseConfig` keys and paste them into [`Aura.com/firebase-config.js`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20(2)/cosmetic_recommendation_system/Aura.com/firebase-config.js):
 ```javascript
 const firebaseConfig = {
-    apiKey: "AIzaSy...",
-    authDomain: "aura-cosmetics-boutique.firebaseapp.com",
-    projectId: "aura-cosmetics-boutique",
-    storageBucket: "aura-cosmetics-boutique.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef"
+    apiKey: "YOUR_API_KEY_FROM_CONSOLE",
+    authDomain: "aura-beauty-82fd4.firebaseapp.com",
+    projectId: "aura-beauty-82fd4",
+    storageBucket: "aura-beauty-82fd4.firebasestorage.app",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 ```
+*(Note: When hosted on Firebase Hosting, the app will also auto-connect via Firebase Hosting's built-in SDK loader)*
 
-### Step 3: Deploy Firestore Security Rules via Firebase CLI
-Run the following in PowerShell:
-```powershell
-npm install -g firebase-tools
-firebase login
-firebase deploy --only firestore
-```
-> The included [`firestore.rules`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20(2)/cosmetic_recommendation_system/firestore.rules) will automatically be deployed to secure your `products`, `orders`, and `inventory_logs` collections!
-
----
-
-## 2. Frontend Hosting on Vercel
-
-The repository includes pre-configured [`vercel.json`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20%282%29/cosmetic_recommendation_system/vercel.json) files at both root and subfolder levels for zero-configuration deployment.
-
-### Option A: 1-Click via GitHub (Recommended)
-1. Push your code to GitHub (see Section 4).
-2. Go to [vercel.com/new](https://vercel.com/new).
-3. Import the repository **`likhitapriya21-web/AURA-BEAUTY`**.
-4. Leave all settings default (Vercel automatically detects [`vercel.json`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20(2)/cosmetic_recommendation_system/vercel.json)).
-5. Click **Deploy**.
-   - Your frontend will be live on `https://aura-beauty.vercel.app` with instant SSL and worldwide CDN!
-
-### Option B: Deploy via Vercel CLI
+### Step 2: Deploy to Firebase Hosting & Firestore
 In your terminal:
 ```powershell
 cd "c:\Users\LENOVO\OneDrive\Desktop\cosmetic_recommendation_system (2)\cosmetic_recommendation_system"
-npx vercel
+
+# Log in to Google account associated with aura-beauty-82fd4
+firebase login
+
+# Deploy both Hosting (Aura.com) and Firestore Security Rules
+firebase deploy
 ```
-For production:
+*To deploy only hosting:*
 ```powershell
-npx vercel --prod
-```
-
----
-
-## 3. Hosting on Firebase (Target: https://aura-cosmetics-boutique.web.app)
-
-To deploy the frontend directly to Firebase Hosting:
-```powershell
-cd "c:\Users\LENOVO\OneDrive\Desktop\cosmetic_recommendation_system (2)\cosmetic_recommendation_system"
 firebase deploy --only hosting
 ```
+
 Your boutique will immediately go live at:
-**`https://aura-cosmetics-boutique.web.app`** (and `https://aura-cosmetics-boutique.firebaseapp.com`)
+- **`https://aura-beauty-82fd4.web.app`**
+- **`https://aura-beauty-82fd4.firebaseapp.com`**
 
 ---
 
-## 4. Git Commands to Commit & Push Deployment Configurations
+## 2. Frontend Hosting on Vercel (Alternative / Multi-Cloud)
 
-To commit the new Firebase backend and Vercel hosting configurations and push them to GitHub:
+The repository also includes pre-configured [`vercel.json`](file:///c:/Users/LENOVO/OneDrive/Desktop/cosmetic_recommendation_system%20(2)/cosmetic_recommendation_system/vercel.json) files for multi-cloud deployment.
+
+### Option A: 1-Click via GitHub
+1. Push your code to GitHub (see Section 3).
+2. Go to [vercel.com/new](https://vercel.com/new).
+3. Import the repository **`likhitapriya21-web/AURA-BEAUTY`**.
+4. Click **Deploy**.
+   - Your frontend will be live on `https://aura-beauty.vercel.app` with instant SSL and worldwide CDN!
+
+---
+
+## 3. Git Commands to Commit & Push
+
+To commit all configurations and push them to your GitHub repository:
 
 ```powershell
 cd "c:\Users\LENOVO\OneDrive\Desktop\cosmetic_recommendation_system (2)\cosmetic_recommendation_system"
 
-# 1. Check newly added files
+# 1. Check status
 git status
 
-# 2. Stage all hosting and backend files
-git add vercel.json Aura.com/vercel.json firebase.json .firebaserc firestore.rules firestore.indexes.json Aura.com/firebase-config.js Aura.com/index.html Aura.com/script.js Aura.com/styles.css DEPLOYMENT.md
+# 2. Stage all files
+git add .
 
 # 3. Commit changes
-git commit -m "feat: configure Vercel frontend hosting and Firebase Firestore backend"
+git commit -m "feat(firebase): connect aura-beauty-82fd4 live Firebase project and hosting"
 
 # 4. Push to GitHub main branch
 git push -u origin main

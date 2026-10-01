@@ -1,39 +1,46 @@
 // Aura Boutique - Firebase Backend Configuration & Cloud Firestore Integration
+// Project: aura-beauty-82fd4 (https://console.firebase.google.com/u/0/project/aura-beauty-82fd4/overview)
 
-// REPLACE THE CONFIG VALUES BELOW WITH YOUR FIREBASE PROJECT SETTINGS:
-// You can get these in Firebase Console: https://console.firebase.google.com/
-// Project Settings -> General -> Your apps -> Web app -> SDK setup and configuration
+// PASTE YOUR FIREBASE WEB APP CONFIG VALUES BELOW:
+// Found in Firebase Console: Project Settings (gear icon) -> General -> Your apps -> Web app (</>)
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
-    authDomain: "aura-cosmetics-boutique.firebaseapp.com",
-    projectId: "aura-cosmetics-boutique",
-    storageBucket: "aura-cosmetics-boutique.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef1234567890"
+    authDomain: "aura-beauty-82fd4.firebaseapp.com",
+    projectId: "aura-beauty-82fd4",
+    storageBucket: "aura-beauty-82fd4.firebasestorage.app",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 let db = null;
 let auth = null;
 let isFirebaseConnected = false;
 
-// Initialize Firebase if valid configuration exists
+// Initialize Firebase if valid configuration exists or if auto-initialized by Firebase Hosting
 (function initFirebase() {
     try {
-        if (typeof firebase !== 'undefined' && firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+        if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+            // Automatically initialized by Firebase Hosting (/__/firebase/init.js)
+            db = firebase.firestore();
+            auth = firebase.auth();
+            isFirebaseConnected = true;
+            console.log("🔥 Aura Firebase Backend: Auto-connected via Firebase Hosting!");
+        } else if (typeof firebase !== 'undefined' && firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
             firebase.initializeApp(firebaseConfig);
             db = firebase.firestore();
             auth = firebase.auth();
             isFirebaseConnected = true;
-            console.log("🔥 Aura Firebase Cloud Backend: Connected successfully!");
-            
-            // Sign in anonymously if no auth present
+            console.log("🔥 Aura Firebase Cloud Backend: Connected successfully via configuration!");
+        } else {
+            console.info("ℹ️ Aura Boutique: Using local storage fallback. Enter your Firebase web credentials in firebase-config.js or deploy to Firebase Hosting.");
+        }
+
+        if (isFirebaseConnected && auth) {
             auth.onAuthStateChanged(user => {
                 if (!user) {
                     auth.signInAnonymously().catch(err => console.warn("Firebase Auth Note:", err.message));
                 }
             });
-        } else {
-            console.info("ℹ️ Aura Boutique: Using local storage backend (Firebase placeholder active). Enter your Firebase credentials in firebase-config.js to activate live Cloud Firestore.");
         }
     } catch (err) {
         console.warn("Firebase initialization warning (falling back to local cache):", err);

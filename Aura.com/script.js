@@ -902,7 +902,7 @@ function setupBackendIntegration() {
                 const activeCat = activeBtn ? activeBtn.dataset.filter : 'All';
                 renderProducts(activeCat);
             }
-        });
+        }).catch(err => console.warn("Firestore product sync note:", err.message));
         
         // Hydrate live orders from Firebase Firestore
         window.FirebaseBackend.getOrders().then(cloudOrders => {
@@ -910,7 +910,7 @@ function setupBackendIntegration() {
                 orders = cloudOrders;
                 localStorage.setItem('aura_orders', JSON.stringify(orders));
             }
-        });
+        }).catch(err => console.warn("Firestore orders sync note:", err.message));
     } else {
         if (statusDot) statusDot.classList.add('local');
         if (statusText) statusText.innerText = 'Local DB Sync';

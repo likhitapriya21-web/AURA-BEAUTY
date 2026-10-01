@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "aura-cosmetics-boutique",
     "public": "Aura.com",
     "ignore": [
       "firebase.json",
