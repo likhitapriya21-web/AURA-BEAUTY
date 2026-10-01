@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura | Luxury Cosmetics & Diagnostics</title>
+    <meta name="description"
+        content="Discover your perfect cosmetic formulation. Aura brings you premium skincare, haircare, and makeup driven by science and luxury.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">AURA</a>
+            <div class="nav-links">
+                <a href="#categories">Collections</a>
+                <a href="#shop">Shop All</a>
+                <a href="#" id="nav-orders">My Orders</a>
+                <a href="#" id="nav-seller" style="color:var(--accent-color);">Seller Dashboard</a>
+                <a href="http://localhost:8501" target="_blank" style="color: #FF4F5A; font-weight: 600;">✨ AI Diagnostic Curator</a>
+            </div>
+            <div class="nav-icons">
+                <button id="cart-btn">
+                    <span>Cart</span>
+                    <span id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Selection</h3>
+            <button id="close-cart">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Items injected by JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">₹0</span>
+            </div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">THE PINNACLE OF COSMETIC SCIENCE</p>
+            <h1 class="hero-title">Discover Your Aura</h1>
+            <p class="hero-desc">Elevate your ritual with premium formulations crafted for your unique diagnostic
+                profile.</p>
+            <a href="#categories" class="primary-btn">Explore Collections</a>
+        </div>
+    </header>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories-section">
+        <div class="section-header">
+            <h2>Curated Elegance</h2>
+            <p>Targeted solutions tailored for pristine results.</p>
+        </div>
+        <div class="category-grid">
+            <div class="category-card" data-category="Skin">
+                <img src="assets/aura_skincare.png" alt="Skin Care Collection">
+                <div class="category-info">
+                    <h3>Skin Care</h3>
+                    <p>Dermatologically formulated elixirs.</p>
+                    <span class="view-link">Shop Skin</span>
+                </div>
+            </div>
+            <div class="category-card" data-category="Hair">
+                <img src="assets/aura_haircare.png" alt="Hair Care Collection">
+                <div class="category-info">
+                    <h3>Hair Care</h3>
+                    <p>Trichology-approved nutritive serums.</p>
+                    <span class="view-link">Shop Hair</span>
+                </div>
+            </div>
+            <div class="category-card" data-category="Makeup">
+                <img src="assets/aura_makeup.png" alt="Makeup Collection">
+                <div class="category-info">
+                    <h3>Makeup</h3>
+                    <p>Artistic, non-comedogenic pigments.</p>
+                    <span class="view-link">Shop Makeup</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop" class="shop-section">
+        <div class="section-header">
+            <h2>The Aura Boutique</h2>
+            <p>Select your prescribed formulations.</p>
+
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="All">All</button>
+                <button class="filter-btn" data-filter="Skin">Skin Care</button>
+                <button class="filter-btn" data-filter="Hair">Hair Care</button>
+                <button class="filter-btn" data-filter="Makeup">Makeup</button>
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-grid">
+            <!-- Products injected by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>AURA</h2>
+                <p>The convergence of clinical diagnostics and luxury aesthetics.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Aura Cosmetics. All rights reserved.</p>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-checkout">&times;</button>
+            <h2 class="serif-text" style="color:var(--primary-color); margin-bottom:10px;">Secure Checkout</h2>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:25px;">Please provide your shipping details
+                for your luxury formulation.</p>
+
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required placeholder="Jane Doe">
+                </div>
+                <div class="form-group">
+                    <label>Shipping Address</label>
+                    <input type="text" required placeholder="123 Aura Avenue, Suite 100">
+                </div>
+                <div class="form-group">
+                    <label>Card Information</label>
+                    <input type="text" required placeholder="**** **** **** 4242">
+                </div>
+                <div class="checkout-summary">
+                    <span>Total to Pay:</span>
+                    <span id="checkout-final-price">₹0</span>
+                </div>
+                <button type="submit" class="primary-btn" style="width:100%; margin-top:20px;">Complete
+                    Purchase</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Completed Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content" style="text-align: center; padding: 50px 30px;">
+            <div style="font-size: 50px; margin-bottom: 20px;">✨</div>
+            <h2 class="serif-text" style="color:var(--primary-color); margin-bottom:10px;">Order Confirmed</h2>
+            <div
+                style="background:var(--bg-color); padding:15px; border-radius:8px; margin-bottom:20px; font-family:monospace;">
+                Payment ID: <strong id="payment-id-display" style="color:var(--accent-color);"></strong>
+            </div>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:30px;">Your curated cosmetics have been
+                formulated and are being prepared for dispatch. Your aura is about to be elevated.</p>
+            <button class="primary-btn" id="continue-shopping">Continue Shopping</button>
+        </div>
+    </div>
+
+    <!-- Orders History Modal -->
+    <div class="modal-overlay" id="orders-modal">
+        <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+            <button class="close-modal" id="close-orders">&times;</button>
+            <h2 class="serif-text" style="color:var(--primary-color); margin-bottom:20px;">Order History</h2>
+            <div id="orders-list">
+                <!-- Orders injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Dashboard (Admin Panel) Modal -->
+    <div class="modal-overlay" id="seller-modal">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+            <button class="close-modal" id="close-seller">&times;</button>
+            <h2 class="serif-text" style="color:var(--primary-color); margin-bottom:10px;">Admin & Inventory Dashboard
+            </h2>
+
+            <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-light);">
+                <h3 style="font-size: 16px; margin-bottom: 15px; color:var(--accent-color);">Update Existing Stock</h3>
+                <form id="restock-form">
+                    <div class="form-group">
+                        <label>Select Product</label>
+                        <select id="restock-prod-id" required
+                            style="width:100%; padding:15px; border:1px solid var(--border-light); border-radius:8px; font-family:var(--font-sans);">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Add Quantity</label>
+                            <input type="number" id="restock-amount" required placeholder="e.g. 50" min="1">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Receiving Date</label>
+                            <input type="date" id="restock-recv-date" required>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Invoice Number</label>
+                            <input type="text" id="restock-invoice-no" required placeholder="INV-2026-X">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Invoice Date</label>
+                            <input type="date" id="restock-invoice-date" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendor / Supplier Name</label>
+                        <input type="text" id="restock-vendor" required placeholder="Aura Global Supplies Ltd.">
+                    </div>
+                    <button type="submit" class="primary-btn"
+                        style="width:100%; margin-top:5px; background-color:#2D2D2D;">Log & Receive Stock</button>
+                </form>
+            </div>
+
+            <h3 style="font-size: 16px; margin-bottom: 15px; color:var(--accent-color);">Publish New Product</h3>
+            <form id="add-product-form">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="new-prod-name" required placeholder="Luxury Matte Lipstick">
+                </div>
+                <div class="form-group">
+                    <label>Brand Name</label>
+                    <input type="text" id="new-prod-brand" required placeholder="Aura Collection">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="new-prod-cat" required
+                        style="width:100%; padding:15px; border:1px solid var(--border-light); border-radius:8px; font-family:var(--font-sans);">
+                        <option value="Skin">Skin Care</option>
+                        <option value="Hair">Hair Care</option>
+                        <option value="Makeup">Makeup</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (₹)</label>
+                    <input type="number" id="new-prod-price" required placeholder="1299" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Initial Stock</label>
+                    <input type="number" id="new-prod-stock" required placeholder="50" min="0">
+                </div>
+                <button type="submit" class="primary-btn" style="width:100%; margin-top:10px;">Publish Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
