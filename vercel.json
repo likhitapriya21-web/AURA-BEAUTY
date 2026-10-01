@@ -2,14 +2,10 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/Aura.com/index.html" },
-    { "source": "/assets/(.*)", "destination": "/Aura.com/assets/$1" },
-    { "source": "/styles.css", "destination": "/Aura.com/styles.css" },
-    { "source": "/script.js", "destination": "/Aura.com/script.js" },
-    { "source": "/firebase-config.js", "destination": "/Aura.com/firebase-config.js" },
-    { "source": "/(.*)", "destination": "/Aura.com/$1" }
-  ],
+  "buildCommand": null,
+  "installCommand": null,
+  "framework": null,
+  "outputDirectory": "Aura.com",
   "headers": [
     {
       "source": "/(.*)",
